@@ -1,16 +1,18 @@
 # Kevin and Maisey
 
 ## Installation
-- install haxe, lime, haxeflixel
-- install http-server globally via npm
+- install haxe, lime, haxeflixel, node, npm
 
-## Run game locally
-In one tab run:
 ```sh
-watchman-make -p 'source/*.hx' 'assets/data/*.tmx' -r 'sh watcher.sh'
+npm i
 ```
 
-In the other:
+## Run game locally
 ```sh
-http-server export/html5/bin
+npm start
+```
+
+## Build the game
+```sh
+npm build
 ```
