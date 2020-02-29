@@ -1,24 +1,24 @@
 package levels;
 
-import flixel.util.FlxColor;
-import utils.Constants;
-import flixel.text.FlxText;
+import components.FullscreenText;
 
 import states.LevelState;
 
 class Intro extends LevelState {
-  var _intoFirstText:FlxText;
+  var _intoFirstText:FullscreenText;
 
   override public function create() {
     super.create();
-
-    _intoFirstText = new FlxText(0, 0, 0, "Some test Text");
-    _intoFirstText.setFormat(Constants.rokkittRegular, 33, FlxColor.BLACK, CENTER);
-    _intoFirstText.screenCenter(XY);
+    
+    // Fullscreen texts NEED TO BE AT BOTTOM OF create()
+    _intoFirstText = new FullscreenText("Some <kevin>test<kevin> Text");
     add(_intoFirstText);
   }
 
   override public function update(elapsed:Float) {
     super.update(elapsed);
+
+    // Fullscreen text toggles
+    !_intoFirstText.screenSeen ? _intoFirstText.show() : _intoFirstText.hide();
   }
 }
