@@ -1,5 +1,6 @@
 package components;
 
+import characters.Maisey;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.tweens.FlxTween;
@@ -19,6 +20,7 @@ class FullscreenText extends FlxSpriteGroup {
   var _boldFont:FlxTextFormat;
 
   var _backgroundSprite:FlxSprite;
+  var _player:Maisey;
 
   public var screenSeen:Bool = false;
 
@@ -26,13 +28,16 @@ class FullscreenText extends FlxSpriteGroup {
    * Display full screen text to explain game story. 
    *
    * @param compText Text for needed for this component. Should be just one sentence.
+   * @param player Needed to prevent player movement when screen is shown.
    * @param compTextWidth Size of FlxText component if it's too lard. Defaulted to 500
    */
-  public function new(compText:String, compTextWidth:Int = 500) {
+  public function new(compText:String, player:Maisey, compTextWidth:Int = 500) {
     super();
 
+    _player = player;
+
     // Background sprite
-    _backgroundSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE, true);
+    _backgroundSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
     _backgroundSprite.alpha = 0;
     add(_backgroundSprite);
 
@@ -62,6 +67,7 @@ class FullscreenText extends FlxSpriteGroup {
   }
 
   public function show() {
+    _player.preventMovement = true;
     _backgroundSprite.alpha = 1;
     FlxTween.tween(_mainText, {alpha: 1}, 0.25, {ease: FlxEase.quadIn});
     haxe.Timer.delay(() -> {
@@ -70,6 +76,7 @@ class FullscreenText extends FlxSpriteGroup {
   }
 
   public function hide() {
+    _player.preventMovement = false;
     _backgroundSprite.alpha = 0;
     _mainText.alpha = 0;
     _continueText.alpha = 0;
@@ -79,6 +86,6 @@ class FullscreenText extends FlxSpriteGroup {
     super.update(elapsed);  
    
     // Hide component on click 
-    if (FlxG.mouse.pressed) screenSeen = true;
+    if (FlxG.mouse.justPressed) screenSeen = true;
   }
 }

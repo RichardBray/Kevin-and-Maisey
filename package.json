@@ -4,10 +4,10 @@
   "description": "## Installation - install haxe, lime, haxeflixel - install http-server globally via npm",
   "main": "index.js",
   "scripts": {
-    "watch":"watchman-make -p 'source/**/*.hx' 'assets/data/*.tmx' -r 'sh watcher.sh'",
-    "server": "live-server export/html5/bin",
+    "watch": "watchman-make -p 'source/**/*.hx' 'assets/data/*.tmx' -r 'sh watcher.sh'",
+    "server": "http-server export/html5/bin",
     "start": "concurrently \"npm run watch\" \"npm run server\"",
-    "release": "lime build html5 -release -final -minify" 
+    "release": "lime build html5 -release -final -minify"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   "homepage": "https://github.com/RichardBray/Kevin-and-Maisey#readme",
   "dependencies": {
     "concurrently": "^5.1.0",
-    "live-server": "^1.2.1"
+    "http-server": "^0.12.1"
   }
 }
