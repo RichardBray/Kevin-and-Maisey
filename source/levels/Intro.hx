@@ -1,17 +1,24 @@
 package levels;
 
+import flixel.FlxG;
+import flixel.util.FlxColor;
+import flixel.FlxSprite;
 import components.FullscreenText;
 
 import states.LevelState;
 
 class Intro extends LevelState {
   var _intoFirstText:FullscreenText;
+  var _floor:FlxSprite;
 
   override public function create() {
     super.create();
-    
+  
+    // Environment
+    addFloor(200, 900);
+
     // Add characters
-    addKevin(400, 900);
+    addKevin(400, 700);
     addMaisey(40, 40);
     
     // Add Hud

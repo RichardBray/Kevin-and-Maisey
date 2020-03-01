@@ -32,7 +32,10 @@ class Hud extends FlxSpriteGroup {
     add(_itemContainer);
 
     // Items
-    _headphones = new FlxSprite(20, 20);
+    _headphones = new FlxSprite(0, 0);
+    _headphones.makeGraphic(60, 60, FlxColor.WHITE);
+    _headphones.alpha = 0;
+    add(_headphones);
   }
   
   public function toggleItems(showItemContainer:Bool) {
