@@ -46,7 +46,11 @@ class Hud extends FlxSpriteGroup {
       _pullOutTab, 
       {y: ((FlxG.height - 60) + newItemHeight)}, 
       0.25,
-      {onComplete: (_) -> _toggleTweenEnded = true}
+      {onComplete: (_) -> {
+          _toggleTweenEnded = true;
+          _player.preventMovement = false;
+        }
+      }
     );
   }
 

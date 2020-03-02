@@ -36,8 +36,9 @@ class Maisey extends FlxSprite {
   }
 
   public function flyToPosition(destX:Float, destY:Float) {
+    final minTravelTime:Float = 0.4;
     final duration:Float = ((Math.abs(x - destX) + Math.abs(y - destY)) / 1000);
-    final minDuration:Float = (duration > .5) ? duration : .5;
+    final minDuration:Float = (duration > minTravelTime) ? duration : minTravelTime;
 
     // Used to check if player is moving for run animation
     _destX = destX;
