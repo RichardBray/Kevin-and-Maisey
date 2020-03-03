@@ -16,3 +16,8 @@ npm start
 ```sh
 npm build
 ```
+
+## Stuff to do
+- pause screen
+- title screen
+- cursor images

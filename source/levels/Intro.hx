@@ -17,6 +17,7 @@ class Intro extends LevelState {
   var _maiseyIntroduced:Bool = false;
 
   var _helpTextOne:FlxText;
+  var _helpTextTwo:FlxText;
 
   public function new(firstPass:Bool = false, secondPass:Bool = false) {
     super();
@@ -39,12 +40,11 @@ class Intro extends LevelState {
     addHud();
 
     // Help texts
-    _helpTextOne = new FlxText(0, 60, 500);
-    _helpTextOne.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK, CENTER);
-    _helpTextOne.screenCenter(X);
-    _helpTextOne.applyMarkup("Click anywhere to move <maisey>Maisy<maisey> around", Constants.fontFormatting);
-    _helpTextOne.alpha = 0;
+    _helpTextOne = createHelpText("Click anywhere to move <maisey>Maisy<maisey> around");
     add(_helpTextOne);
+
+    _helpTextTwo = createHelpText("Click on the bottom right section to see your <strong>items<strong>");
+    add(_helpTextTwo);
 
     // Fullscreen texts
     if (!_firstPass) showFirstText(); 
@@ -59,16 +59,25 @@ class Intro extends LevelState {
     }    
   }
 
+  function createHelpText(helpText:String):FlxText {
+    var helpComp:FlxText = new FlxText(0, 60, 500);
+    helpComp.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK, CENTER);
+    helpComp.screenCenter(X);
+    helpComp.applyMarkup(helpText, Constants.fontFormatting);
+    helpComp.alpha = 0;
+    return helpComp;
+  }
+
   function showFirstText() {
     FlxG.switchState(
-      new FullscreenText("Meet <kevin>Kevin<kevin>, the Kevin's helper.", "Intro", 
+      new FullscreenText("Meet <kevin>Kevin<kevin>, the autistic turtle.", "Intro", 
       [true])
     );
   }
 
   function showSecondText() {
     FlxG.switchState(
-      new FullscreenText("Meet <maisey>Maisy<maisey>, the autistic turtle.", "Intro", 
+      new FullscreenText("Meet <maisey>Maisy<maisey>, Kevin's ladybird carer.", "Intro", 
       [true, true])
     );
   }
@@ -89,5 +98,8 @@ class Intro extends LevelState {
     _seconds += elapsed; // Used for animations
 
     if (_maiseyIntroduced) showSecondText();
+
+    if (_seconds > 3) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
+    if (_seconds > 5) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
   }
 }

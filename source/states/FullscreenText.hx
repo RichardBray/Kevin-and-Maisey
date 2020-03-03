@@ -49,7 +49,7 @@ class FullscreenText extends GameState {
 
     
     // Main text
-    _mainText = new FlxText(0, 0, _compTextWidth, _compText);
+    _mainText = new FlxText(0, 0, _compTextWidth);
     _mainText.setFormat(Constants.rokkittRegular, Constants.lrgFont, FlxColor.BLACK, CENTER);
     _mainText.screenCenter(XY);
     _mainText.applyMarkup(_compText, Constants.fontFormatting);

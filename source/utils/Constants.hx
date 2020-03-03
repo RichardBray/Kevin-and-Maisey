@@ -16,6 +16,7 @@ class Constants {
 	public static final smlFont:Int = 24;
 	public static final medFont:Int = 36;
   public static final lrgFont:Int = 48; 
+  public static final hroFont:Int = 60; 
   
   // Colours
   public static final kevinGreen:FlxColor = 0xff72cee6; // Dark background green

@@ -9,6 +9,8 @@ import characters.Kevin;
 import components.Hud;
 
 class LevelState extends GameState {
+  var _pauseMenu:PauseState;
+
   public var maisey:Maisey;
   public var kevin:Kevin;
   public var hud:Hud;
@@ -40,6 +42,9 @@ class LevelState extends GameState {
     add(floor);    
   }
 
+  /**
+   * Stops player character from moving down lower than the floor.
+   */
   function preventPlayerDesent(maiseyCol:Maisey, floorCol:FlxSprite) {
     maiseyCol.isFloored = true;
   }
@@ -54,9 +59,14 @@ class LevelState extends GameState {
 
     if (FlxG.overlap(maisey, floor)) {
       maisey.isFloored = true;
-      maisey.y = (900 - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
+      maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
     } else {
       maisey.isFloored = false;
     }
+
+		if (FlxG.keys.justPressed.ESCAPE) {
+			var _pauseMenu:PauseState = new PauseState();
+			openSubState(_pauseMenu);
+		}    
   }
 }
