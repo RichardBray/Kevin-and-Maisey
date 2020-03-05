@@ -11,6 +11,7 @@ import characters.KevinEating;
 import states.FullscreenText;
 import states.LevelState;
 
+import states.LevelState.SpeechData;
 class Intro extends LevelState {
 
   var _seconds:Float = 0;
@@ -21,6 +22,8 @@ class Intro extends LevelState {
 
   var _helpTextOne:FlxText;
   var _helpTextTwo:FlxText;
+
+  var _charactersLeaving:Bool = false;
 
   public function new(firstPass:Bool = false, secondPass:Bool = false) {
     super();
@@ -101,11 +104,41 @@ class Intro extends LevelState {
     }, 5500);
   }
 
+  function charactersTalk(_) {
+    final maisyPos:Array<Int> = [740, 700];
+    final sentences:Array<SpeechData> = [
+      {
+        x: maisyPos[0], y: maisyPos[1], text: "<maisey>Maisy<maisey>\nMorning Kevin!", timing: 0
+      },
+      {
+        x: maisyPos[0], y: maisyPos[1], text: "<maisey>Maisy<maisey>\nWow you ate your breakfast quickly.", timing: 2500
+      },
+      {
+        x: maisyPos[0], y: maisyPos[1], text: "<maisey>Maisy<maisey>\nWant to come to the post office with me?", timing: 4500
+      },
+      {
+        x: maisyPos[0] - 20, y: maisyPos[1], text: "<kevin>Kevin<kevin>\nYes", timing: 7500
+      },
+      {
+        x: 0, y: 0, text: "", timing: 9000
+      }              
+    ];
+
+    FlxTween.tween(_helpTextTwo, {alpha: 0}, 0.5);  
+    showSpeech(sentences, () -> outCutScenePrep(charactersLeaveScene));
+  }
+
+  function charactersLeaveScene(_) {
+    _charactersLeaving = true;
+    FlxTween.tween(kevin, {x: 2000}, 6);
+  }
+
   override public function mainCharactersInteract(_, _) {
     maisey.preventMovement = true;
     inCutScene = true;
-    FlxTween.tween(maisey, {x: 900, y: 700}, 0.5);
+    FlxTween.tween(maisey, {x: 985, y: 700}, 0.5);
     maisey.faceLeft();
+    haxe.Timer.delay(() -> inCutScenePrep(charactersTalk), 500);
   }
 
   override public function update(elapsed:Float) {
@@ -114,9 +147,11 @@ class Intro extends LevelState {
 
     if (_maiseyIntroduced) showSecondText();
 
-    if (_firstPass && _secondPass) {
-      if (_seconds > 4) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
-      if (_seconds > 5) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
+    if (_charactersLeaving) kevin.kevinWalking = true;
+
+    if (_firstPass && _secondPass && !inCutScene) {
+      if (_seconds > 3) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
+      if (_seconds > 4) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
     }
   }
 }

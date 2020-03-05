@@ -8,7 +8,7 @@ class KevinEating extends FlxSprite {
 
     loadGraphic("assets/images/characters/kevin_eating.png", true, 446, 201);
 
-    animation.add("eating", [for (i in 0...99) i], 12);	
+    animation.add("eating", [for (i in 0...107) i], 14);	
   }
 
   override public function update(elapsed:Float) {
