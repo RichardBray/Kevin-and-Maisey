@@ -90,6 +90,7 @@ class Intro extends LevelState {
   }
 
   function introMaisy() {
+    maisey.preventMovement = true;
     haxe.Timer.delay(() -> {
       FlxTween.tween(maisey, {x: 1700}, 0.5, {
         onComplete: (_) -> { 
@@ -102,8 +103,9 @@ class Intro extends LevelState {
 
   override public function mainCharactersInteract(_, _) {
     maisey.preventMovement = true;
-    FlxTween.tween(maisey, {x: 840}, 0.5);
-    FlxTween.tween(maisey, {x: 676}, 0.5);
+    inCutScene = true;
+    FlxTween.tween(maisey, {x: 900, y: 700}, 0.5);
+    maisey.faceLeft();
   }
 
   override public function update(elapsed:Float) {
@@ -112,7 +114,9 @@ class Intro extends LevelState {
 
     if (_maiseyIntroduced) showSecondText();
 
-    if (_seconds > 6) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
-    if (_seconds > 8) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
+    if (_firstPass && _secondPass) {
+      if (_seconds > 4) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
+      if (_seconds > 5) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
+    }
   }
 }

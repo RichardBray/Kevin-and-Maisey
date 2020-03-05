@@ -14,9 +14,10 @@ class LevelState extends GameState {
 
   public var maisey:Maisey;
   public var kevin:Kevin;
-  public var kevinBox:FlxObject;
   public var hud:Hud;
   public var floor:FlxSprite;
+
+  public var inCutScene:Bool = false;
 
   override public function create() {
     super.create();
@@ -30,9 +31,7 @@ class LevelState extends GameState {
 
   public function addKevin(x:Float = 0, y:Float = 0) {
     kevin = new Kevin(x, y);
-    kevinBox = new FlxObject(x - 50, y - 50, kevin.width + 100, kevin.height + 100);
     add(kevin);
-    add(kevinBox);
   } 
   
   public function addHud() {
@@ -72,13 +71,14 @@ class LevelState extends GameState {
     }  
     
     // Overlaps
-
-    FlxG.overlap(maisey, kevin, mainCharactersInteract);
-    if (FlxG.overlap(maisey, floor)) {
-      maisey.isFloored = true;
-      maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
-    } else {
-      maisey.isFloored = false;
-    }  
+    if (!inCutScene) {
+      FlxG.overlap(maisey, kevin, mainCharactersInteract);
+      if (FlxG.overlap(maisey, floor)) {
+        maisey.isFloored = true;
+        maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
+      } else {
+        maisey.isFloored = false;
+      }  
+    }
   }
 }
