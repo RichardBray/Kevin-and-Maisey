@@ -1,5 +1,6 @@
 package states;
 
+import flixel.FlxObject;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -13,12 +14,13 @@ class LevelState extends GameState {
 
   public var maisey:Maisey;
   public var kevin:Kevin;
+  public var kevinBox:FlxObject;
   public var hud:Hud;
   public var floor:FlxSprite;
 
   override public function create() {
     super.create();
-    bgColor = 0xffefe1cb; // Game background color
+    bgColor = 0xffffffff; // Game background color
   }
 
   public function addMaisey(x:Float = 0, y:Float = 0) {
@@ -28,7 +30,9 @@ class LevelState extends GameState {
 
   public function addKevin(x:Float = 0, y:Float = 0) {
     kevin = new Kevin(x, y);
+    kevinBox = new FlxObject(x - 50, y - 50, kevin.width + 100, kevin.height + 100);
     add(kevin);
+    add(kevinBox);
   } 
   
   public function addHud() {
@@ -49,24 +53,32 @@ class LevelState extends GameState {
     maiseyCol.isFloored = true;
   }
 
+  public function mainCharactersInteract(_, _) {
+    // made to be ovewritten
+  }
+
   override public function update(elapsed:Float) {
     super.update(elapsed);
 
     // Maisey go to mouse click
     if (FlxG.mouse.justPressed && !maisey.preventMovement) {
+      js.Browser.console.log(FlxG.mouse.getPosition().x, FlxG.mouse.getPosition().y);
       maisey.flyToPosition(FlxG.mouse.getPosition().x, FlxG.mouse.getPosition().y);
-    }
-
-    if (FlxG.overlap(maisey, floor)) {
-      maisey.isFloored = true;
-      maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
-    } else {
-      maisey.isFloored = false;
     }
 
 		if (FlxG.keys.justPressed.ESCAPE) {
 			var _pauseMenu:PauseState = new PauseState();
 			openSubState(_pauseMenu);
-		}    
+    }  
+    
+    // Overlaps
+
+    FlxG.overlap(maisey, kevin, mainCharactersInteract);
+    if (FlxG.overlap(maisey, floor)) {
+      maisey.isFloored = true;
+      maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
+    } else {
+      maisey.isFloored = false;
+    }  
   }
 }

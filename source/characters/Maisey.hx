@@ -1,11 +1,11 @@
 package characters;
 
+import flixel.text.FlxText;
 import flixel.FlxObject;
 import flixel.tweens.FlxEase;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
 class Maisey extends FlxSprite {
@@ -55,6 +55,10 @@ class Maisey extends FlxSprite {
       minDuration, true, 
       { ease: FlxEase.sineIn }
     );
+  }
+
+  public function faceLeft() {
+    facing = FlxObject.LEFT;
   }
 
   override public function update(elapsed:Float) {

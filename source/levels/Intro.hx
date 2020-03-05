@@ -1,11 +1,13 @@
 package levels;
 
 import flixel.util.FlxColor;
-import utils.Constants;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxG;
+
+import utils.Constants;
+import characters.KevinEating;
 import states.FullscreenText;
 import states.LevelState;
 
@@ -15,6 +17,7 @@ class Intro extends LevelState {
   var _firstPass:Bool = false;
   var _secondPass:Bool = false;
   var _maiseyIntroduced:Bool = false;
+  var _kevinEating:KevinEating;
 
   var _helpTextOne:FlxText;
   var _helpTextTwo:FlxText;
@@ -33,8 +36,15 @@ class Intro extends LevelState {
 
     // Add characters
     addKevin(400, 700);
-    final maisyXPos:Int = _secondPass ? 40 : -100;
-    addMaisey(maisyXPos, 40);
+    kevin.alpha = _secondPass ? 1 : 0;
+  
+    _kevinEating = new KevinEating(400, 700);
+    _kevinEating.alpha = _secondPass ? 0 : 1;
+    add(_kevinEating);
+
+    final maisyXPos:Int = _secondPass ? 1700 : 2000;
+    addMaisey(maisyXPos, 600);
+    maisey.faceLeft();
     
     // Add Hud
     addHud();
@@ -43,19 +53,16 @@ class Intro extends LevelState {
     _helpTextOne = createHelpText("Click anywhere to move <maisey>Maisy<maisey> around");
     add(_helpTextOne);
 
-    _helpTextTwo = createHelpText("Click on the bottom right section to see your <strong>items<strong>");
+    _helpTextTwo = createHelpText("Click on <kevin>Kevin<kevin> to talk to him.");
     add(_helpTextTwo);
 
     // Fullscreen texts
     if (!_firstPass) showFirstText(); 
-    if (_firstPass && !_secondPass) introMaisy(); 
+    if (_firstPass && !_secondPass) introMaisy();
     
     // Help texts show
     if (_firstPass && _secondPass) {
-      // base this on second timings
       haxe.Timer.delay(() -> FlxTween.tween(_helpTextOne, {alpha: 1}, 0.5), 500);
-      // click bottom right tab to open and close your item section
-      // click on and item to use it
     }    
   }
 
@@ -77,20 +84,26 @@ class Intro extends LevelState {
 
   function showSecondText() {
     FlxG.switchState(
-      new FullscreenText("Meet <maisey>Maisy<maisey>, Kevin's ladybird carer.", "Intro", 
+      new FullscreenText("and <maisey>Maisy<maisey>, Kevin's ladybird carer.", "Intro", 
       [true, true])
     );
   }
 
   function introMaisy() {
     haxe.Timer.delay(() -> {
-      FlxTween.tween(maisey, {x: 40}, 0.5, {
+      FlxTween.tween(maisey, {x: 1700}, 0.5, {
         onComplete: (_) -> { 
           haxe.Timer.delay(() -> _maiseyIntroduced = true, 500);
         },
         ease: FlxEase.circOut
       }); 
-    }, 1000);
+    }, 5500);
+  }
+
+  override public function mainCharactersInteract(_, _) {
+    maisey.preventMovement = true;
+    FlxTween.tween(maisey, {x: 840}, 0.5);
+    FlxTween.tween(maisey, {x: 676}, 0.5);
   }
 
   override public function update(elapsed:Float) {
@@ -99,7 +112,7 @@ class Intro extends LevelState {
 
     if (_maiseyIntroduced) showSecondText();
 
-    if (_seconds > 3) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
-    if (_seconds > 5) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
+    if (_seconds > 6) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
+    if (_seconds > 8) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
   }
 }

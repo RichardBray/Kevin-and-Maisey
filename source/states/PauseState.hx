@@ -32,7 +32,7 @@ class PauseState extends FlxSubState {
     _boBackBtn.width = 200;
     _boBackBtn.health = 200;
     _boBackBtn.label.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK);
-    add(_boBackBtn);
+    // add(_boBackBtn);
   }
 
   function closePauseMenu() {
