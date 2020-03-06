@@ -1,6 +1,5 @@
 package characters;
 
-import flixel.text.FlxText;
 import flixel.FlxObject;
 import flixel.tweens.FlxEase;
 import flixel.FlxG;
@@ -17,11 +16,12 @@ class Maisey extends FlxSprite {
   public var playIdle:Bool = false;
   public var preventMovement:Bool = false;
   public var isFloored:Bool = false;
+  public var playFlying:Bool = false;
     
   public function new(x:Float = 0, y:Float = 0) {
     super(x, y);
 
-    _destX = x;
+    _destX = x - (132 / 2);
 		_min = FlxPoint.get(FlxG.width * 0.1, FlxG.height * 0.25);
     _max = FlxPoint.get(FlxG.width * 0.7, FlxG.height * 0.75);
       
@@ -32,7 +32,7 @@ class Maisey extends FlxSprite {
     
     animation.add("run", [for (i in 0...6) i], 12);	
     animation.add("takeOff", [for (i in 10...13) i], 12);	
-    animation.add("idle", [for (i in 20...29) i], 12);	
+    animation.add("idle", [for (i in 20...29) i], 4);	
     animation.add("flying", [for (i in 30...37) i], 12);	
   }
 
@@ -62,6 +62,10 @@ class Maisey extends FlxSprite {
     facing = FlxObject.LEFT;
   }
 
+  public function faceRight() {
+    facing = FlxObject.RIGHT;
+  }  
+
   override public function update(elapsed:Float) {
     super.update(elapsed);
     final isMoving:Bool = x != (_destX - (width / 2));
@@ -69,12 +73,16 @@ class Maisey extends FlxSprite {
     if (!preventMovement) {
       if (isFloored) {
         animation.play(isMoving ? "run" : "idle");
+        y = isMoving ? 689 : 679; // hack to fix incorrect spritesheet height
       } else {
         animation.play("flying");
       }
     } else {
       if (playIdle) {
         animation.play("idle");
+        y = 679;
+      } else if (playFlying) {
+        animation.play("flying");
       } else {
         animation.play("run");
       }

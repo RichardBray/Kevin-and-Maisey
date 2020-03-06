@@ -19,8 +19,9 @@ class Constants {
   public static final hroFont:Int = 60; 
   
   // Colours
-  public static final kevinGreen:FlxColor = 0xff72cee6; // Dark background green
-  public static final maiseyRed:FlxColor = 0xffe91e63; // Dark background green
+  public static final kevinGreen:FlxColor = 0xff999908;
+  public static final maiseyRed:FlxColor = 0xfffe4552; 
+  public static final floorBlue:FlxColor = 0xffb0caca;
 
 	// Levels
 	public static final levelNames:Map<String, Class<LevelState>> = [

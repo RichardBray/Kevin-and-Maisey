@@ -1,5 +1,6 @@
 package states;
 
+import flixel.FlxObject;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.TweenCallback;
 import utils.Constants;
@@ -20,8 +21,9 @@ class LevelState extends GameState {
   public var maisey:Maisey;
   public var kevin:Kevin;
   public var hud:Hud;
-  public var floor:FlxSprite;
+  public var floor:FlxObject;
   public var speech:FlxText;
+  public var bg:FlxSprite;
 
   public var inCutScene:Bool = false; // Prevents overlaps
 
@@ -29,10 +31,13 @@ class LevelState extends GameState {
     super.create();
     bgColor = 0xffffffff; // Game background color
 
-    speech = new FlxText(0, 0, 250);
-    speech.setFormat(Constants.rokkittRegular, Constants.smlFont, FlxColor.BLACK);
+    speech = new FlxText(0, 0, 500);
+    speech.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK);
     speech.alpha = 0;
     add(speech);
+
+    floor = new FlxObject(0, 810, FlxG.width, 200);
+    add(floor);        
   }
 
   public function addMaisey(x:Float = 0, y:Float = 0) {
@@ -50,6 +55,12 @@ class LevelState extends GameState {
     add(hud);
   }
 
+  public function addBackground() {
+    bg = new FlxSprite(0, 0);
+    bg.loadGraphic("assets/images/backgrounds/park.png", false, FlxG.width, FlxG.height);
+    add(bg);
+  }
+
   public function showSpeech(sentences:Array<SpeechData>, callback:Null<Void->Void>) {
     var sentenceIdx:Int = 0;
     for (sentence in sentences) {
@@ -62,12 +73,6 @@ class LevelState extends GameState {
         if (sentenceIdx == sentences.length) callback();        
       }, sentence.timing);
     }
-  }
-
-  public function addFloor(height:Int, distanceFromTop:Int) {
-    floor = new FlxSprite(0, distanceFromTop);
-    floor.makeGraphic(FlxG.width, height, FlxColor.BLUE);
-    add(floor);    
   }
 
   public function inCutScenePrep(callback:TweenCallback) {
@@ -112,7 +117,7 @@ class LevelState extends GameState {
       FlxG.overlap(maisey, kevin, mainCharactersInteract);
       if (FlxG.overlap(maisey, floor)) {
         maisey.isFloored = true;
-        maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
+        // maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
       } else {
         maisey.isFloored = false;
       }  
