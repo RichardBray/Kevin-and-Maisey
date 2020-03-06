@@ -20,7 +20,10 @@ class Kevin extends FlxSprite {
 
   override public function update(elapsed:Float) {
     super.update(elapsed);
-    if (kevinWalking) animation.play("walking");
-    animation.play("outShell");
+    if (kevinWalking) {
+      animation.play("walking");
+    } else {
+      animation.play("idle");
+    }
   }
 }

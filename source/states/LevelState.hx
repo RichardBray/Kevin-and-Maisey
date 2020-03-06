@@ -23,7 +23,7 @@ class LevelState extends GameState {
   public var floor:FlxSprite;
   public var speech:FlxText;
 
-  public var inCutScene:Bool = false;
+  public var inCutScene:Bool = false; // Prevents overlaps
 
   override public function create() {
     super.create();

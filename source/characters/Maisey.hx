@@ -14,6 +14,7 @@ class Maisey extends FlxSprite {
   var _isMoving:Bool = false;
   var _destX:Float = 0; // Used to determine if player is moving
 
+  public var playIdle:Bool = false;
   public var preventMovement:Bool = false;
   public var isFloored:Bool = false;
     
@@ -65,10 +66,18 @@ class Maisey extends FlxSprite {
     super.update(elapsed);
     final isMoving:Bool = x != (_destX - (width / 2));
   
-    if (isFloored) {
-      animation.play(isMoving ? "run" : "idle");
+    if (!preventMovement) {
+      if (isFloored) {
+        animation.play(isMoving ? "run" : "idle");
+      } else {
+        animation.play("flying");
+      }
     } else {
-      animation.play("flying");
+      if (playIdle) {
+        animation.play("idle");
+      } else {
+        animation.play("run");
+      }
     }
   }
 }
