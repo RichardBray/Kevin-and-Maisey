@@ -97,15 +97,6 @@ class Intro extends LevelState {
     maisey.preventMovement = true;
   }
 
-  function createHelpText(helpText:String):FlxText {
-    var helpComp:FlxText = new FlxText(0, 343, 1200);
-    helpComp.setFormat(Constants.rokkittRegular, Constants.lrgFont, FlxColor.BLACK, CENTER);
-    helpComp.screenCenter(X);
-    helpComp.applyMarkup(helpText, Constants.fontFormatting);
-    helpComp.alpha = 0;
-    return helpComp;
-  }
-
   function showFirstText() {
     FlxG.switchState(
       new FullscreenText("Meet <kevin>Kevin<kevin>", "Intro", 
@@ -168,7 +159,7 @@ class Intro extends LevelState {
     _charactersTallking = true;
     FlxTween.tween(maisey, {x: 1127, y: 590}, 0.5);
     maisey.faceLeft();
-    maisey.playFlying = true;
+    maisey.isFlying = true;
     haxe.Timer.delay(() -> inCutScenePrep(charactersTalk), 500);
   }
 
@@ -176,7 +167,7 @@ class Intro extends LevelState {
     super.update(elapsed);
     _seconds += elapsed; // Used for animations
 
-    if (_charactersLeaving) kevin.kevinWalking = true;
+    if (_charactersLeaving) kevin.isWalking = true;
 
     if (_seconds > (_closeHelpOne + 2) && _seconds < (_closeHelpOne + 10)) introMaisy();      
     if (_seconds > (_closeHelpOne)) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
@@ -185,15 +176,15 @@ class Intro extends LevelState {
       _kevinEating.alpha = 0;
       kevin.alpha = 1;
     }
-    if (_maiseyIntroduced && _seconds < (_openHelpFour + 2)) maisey.playIdle = true;
+    if (_maiseyIntroduced && _seconds < (_openHelpFour + 2)) maisey.isIdle = true;
     if (_seconds > (_closeHelpTwo)) FlxTween.tween(_helpTextTwo, {alpha: 0}, 0.5);
     if (_seconds > (_openHelpThree) && _seconds < (_openHelpThree + 4)) FlxTween.tween(_helpTextThree, {alpha: 1}, 0.5);
     if (_seconds > (_closeHelpThree)) FlxTween.tween(_helpTextThree, {alpha: 0}, 0.5);
     if (_seconds > (_openHelpFour) && _seconds < (_openHelpFour + 2)) {
       FlxTween.tween(_helpTextFour, {alpha: 1}, 0.5);
       FlxTween.tween(maisey, {y: 579}, 0.5);
-      maisey.playIdle = false;
-      maisey.playFlying = true;
+      maisey.isIdle = false;
+      maisey.isFlying = true;
       maisey.isFloored = false;
       inCutScene = false;         
     }

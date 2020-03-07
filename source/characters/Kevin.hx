@@ -5,7 +5,8 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
 class Kevin extends FlxSprite {
-  public var kevinWalking:Bool = false;
+  public var isWalking:Bool = false;
+  public var isIdle:Bool = false;
 
   public function new(x:Float = 0, y:Float = 0) {
     super(x, y);
@@ -20,9 +21,9 @@ class Kevin extends FlxSprite {
 
   override public function update(elapsed:Float) {
     super.update(elapsed);
-    if (kevinWalking) {
+    if (isWalking) {
       animation.play("walking");
-    } else {
+    } else if (isIdle) {
       animation.play("idle");
     }
   }

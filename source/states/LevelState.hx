@@ -75,6 +75,15 @@ class LevelState extends GameState {
     }
   }
 
+  public function createHelpText(helpText:String):FlxText {
+    var helpComp:FlxText = new FlxText(0, 343, 1200);
+    helpComp.setFormat(Constants.rokkittRegular, Constants.lrgFont, FlxColor.BLACK, CENTER);
+    helpComp.screenCenter(X);
+    helpComp.applyMarkup(helpText, Constants.fontFormatting);
+    helpComp.alpha = 0;
+    return helpComp;
+  }
+  
   public function inCutScenePrep(callback:TweenCallback) {
     final cameraZoomVal:Float = 1.1;
     FlxTween.tween(FlxG.camera, {zoom: cameraZoomVal}, 0.2, {onComplete: callback});
