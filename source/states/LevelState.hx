@@ -26,6 +26,7 @@ class LevelState extends GameState {
   public var bg:FlxSprite;
   /** Prevents overlaps when Maisy needs to fly somwhere for cutscene */
   public var inCutScene:Bool = false;
+  public var selectedItem:String = ""; // Tells state what item is selected
 
   override public function create() {
     super.create();
@@ -51,7 +52,7 @@ class LevelState extends GameState {
   }
   
   public function addHud() {
-    hud = new Hud(maisey);
+    hud = new Hud(maisey, updateSelectedItem);
     add(hud);
   }
 
@@ -73,6 +74,10 @@ class LevelState extends GameState {
         if (sentenceIdx == sentences.length) callback();        
       }, sentence.timing);
     }
+  }
+
+  public function updateSelectedItem(item:String) {
+    selectedItem = item;
   }
 
   public function createHelpText(helpText:String):FlxText {
@@ -127,7 +132,6 @@ class LevelState extends GameState {
       FlxG.overlap(maisey, kevin, mainCharactersInteract);
       if (FlxG.overlap(maisey, floor)) {
         maisey.isFloored = true;
-        // maisey.y = (floor.y - maisey.height) + 10; //TODO: remove + 10 when I get proper bg
       } else {
         maisey.isFloored = false;
       }  

@@ -23,6 +23,7 @@ class Constants {
   public static final kevinGreen:FlxColor = 0xff999908;
   public static final maiseyRed:FlxColor = 0xfffe4552; 
   public static final floorBlue:FlxColor = 0xffb0caca;
+  public static final itemContainerGreen:FlxColor = 0xff206933;
 
 	// Levels
 	public static final levelNames:Map<String, Class<LevelState>> = [
