@@ -52,6 +52,8 @@ class Intro extends LevelState {
   override public function create() {
     super.create();
   
+    addSpeech();
+  
     // Environment
     _blueLine = new FlxSprite(0, 820);
     _blueLine.makeGraphic(FlxG.width, 10, Constants.floorBlue);
@@ -129,7 +131,7 @@ class Intro extends LevelState {
         x: maisyPos[0] - 20, y: maisyPos[1], text: "<kevin>Kevin<kevin>\nOkay", timing: 11000
       },
       {
-        x: 0, y: 0, text: "", timing: 12000
+        x: maisyPos[0] - 20, y: maisyPos[1], text: "", timing: 12000
       }              
     ];
 

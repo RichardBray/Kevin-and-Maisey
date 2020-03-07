@@ -9,6 +9,7 @@ import states.FullscreenText;
 import characters.KevinStrawberry;
 import states.LevelState;
 
+import states.LevelState.SpeechData;
 
 class Park extends LevelState {
 
@@ -19,6 +20,8 @@ class Park extends LevelState {
   var _kevinEating:KevinStrawberry;  
   var _helpTextOne:FlxText;
 
+  var _charactersLeaving:Bool = false;
+  
   // Timings
   final _kevinStopsMoving:Float = 4;
   final _maiseyStopsMoving:Float = 4.2;
@@ -38,6 +41,8 @@ class Park extends LevelState {
     // Add bg
     if (_firstPass) addBackground();
 
+    addSpeech();
+  
     // Help texts
     _helpTextOne = createHelpText(
       "You will often have to read Kevin’s body language to help decide what is best. 
@@ -77,6 +82,36 @@ class Park extends LevelState {
     );
   }
 
+  function charactersTalk(_) {
+    final speechPos:Array<Int> = [860, 568];
+    final sentences:Array<SpeechData> = [
+      {
+        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nFeeling better?", timing: 0
+      },
+      {
+        x: speechPos[0], y: speechPos[1], text: "<kevin>Kevin<kevin>\nYes", timing: 2000
+      },
+      {
+        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nGreat, let's keep going, we're almost there.", timing: 3000
+      },
+      {
+        x: speechPos[0], y: speechPos[1], text: "", timing: 7000
+      }              
+    ];   
+
+    if (!_charactersLeaving) {
+      showSpeech(sentences, () -> outCutScenePrep(charactersLeaveScene)); 
+    }
+  }
+
+  function charactersLeaveScene(_) {
+    _charactersLeaving = true;
+    speech.alpha = 0;
+    maisey.faceRight();
+    FlxTween.tween(kevin, {x: 2000}, 6);
+    FlxTween.tween(maisey, {x: 2000}, 4);
+  }  
+
   override public function update(elapsed:Float) {
     super.update(elapsed);
     _seconds += elapsed; // Used for animations
@@ -102,13 +137,19 @@ class Park extends LevelState {
       _kevinEating.alpha = 1;
       _kevinEating.isEating = true;  
       _eatSeconds += elapsed;
+      hud.hideHud();
       updateSelectedItem("");
     }
 
     // Cut screne
-    if (_eatSeconds > 4.7) {
+    if (_eatSeconds > 4.7 && _eatSeconds < 6) {
       kevin.alpha = 1;
-      _kevinEating.alpha = 0;    
+      _kevinEating.alpha = 0;  
+      maisey.preventMovement = true;
+      FlxTween.tween(maisey, {x:1160, y:660}, 1);        
+    }
+    if (_eatSeconds > 6 && !_charactersLeaving && _eatSeconds < 7) {
+      inCutScenePrep(charactersTalk);
     }
   }
 }

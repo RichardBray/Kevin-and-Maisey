@@ -32,13 +32,15 @@ class LevelState extends GameState {
     super.create();
     bgColor = 0xffffffff; // Game background color
 
+    floor = new FlxObject(0, 810, FlxG.width, 200);
+    add(floor);        
+  }
+
+  public function addSpeech() {
     speech = new FlxText(0, 0, 500);
     speech.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK);
     speech.alpha = 0;
     add(speech);
-
-    floor = new FlxObject(0, 810, FlxG.width, 200);
-    add(floor);        
   }
 
   public function addMaisey(x:Float = 0, y:Float = 0) {
