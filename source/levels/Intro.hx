@@ -43,9 +43,9 @@ class Intro extends LevelState {
     _firstPass = firstPass;
     _closeHelpOne = _openHelpOne + 7;
     _openHelpTwo = _closeHelpOne + 2;
-    _closeHelpTwo = _openHelpTwo + 9;
+    _closeHelpTwo = _openHelpTwo + 8;
     _openHelpThree = _closeHelpTwo + 2;
-    _closeHelpThree = _openHelpThree + 9;  
+    _closeHelpThree = _openHelpThree + 8;  
     _openHelpFour = _closeHelpThree + 2;  
   }
 
@@ -67,7 +67,7 @@ class Intro extends LevelState {
     add(_helpTextTwo);
 
     _helpTextThree = createHelpText("Play as <maisey>Maisy<maisey>.
-    Help <kevin>Kevin<kevin> navigate through day to day activities and cope in times of anxiety.");
+    Help <kevin>Kevin<kevin> navigate through day-to-day activities and cope in times of anxiety.");
     add(_helpTextThree);    
 
     _helpTextFour = createHelpText("Click anywhere on the screen to move <maisey>Maisy<maisey>.");

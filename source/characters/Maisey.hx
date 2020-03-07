@@ -12,6 +12,7 @@ class Maisey extends FlxSprite {
   var _max:FlxPoint;
   var _isMoving:Bool = false;
   var _destX:Float = 0; // Used to determine if player is moving
+  var _destY:Float = 0; // Used to fix hack for player height
 
   public var playIdle:Bool = false;
   public var preventMovement:Bool = false;
@@ -43,6 +44,7 @@ class Maisey extends FlxSprite {
 
     // Used to check if player is moving for run animation
     _destX = destX;
+    _destY = destY;
 
     // Detect if player is moving to play run animation when floored
     if (x != destX) _isMoving = true;
@@ -73,7 +75,9 @@ class Maisey extends FlxSprite {
     if (!preventMovement) {
       if (isFloored) {
         animation.play(isMoving ? "run" : "idle");
-        y = isMoving ? 689 : 679; // hack to fix incorrect spritesheet height
+        if (_destY > 808) {
+          y = isMoving ? 689 : 679; // hack to fix incorrect spritesheet height
+        }
       } else {
         animation.play("flying");
       }

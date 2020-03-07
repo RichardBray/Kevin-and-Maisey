@@ -24,8 +24,8 @@ class LevelState extends GameState {
   public var floor:FlxObject;
   public var speech:FlxText;
   public var bg:FlxSprite;
-
-  public var inCutScene:Bool = false; // Prevents overlaps
+  /** Prevents overlaps when Maisy needs to fly somwhere for cutscene */
+  public var inCutScene:Bool = false;
 
   override public function create() {
     super.create();
@@ -107,6 +107,7 @@ class LevelState extends GameState {
       maisey.flyToPosition(FlxG.mouse.getPosition().x, FlxG.mouse.getPosition().y);
     }
 
+    // Pause screen
 		if (FlxG.keys.justPressed.ESCAPE) {
 			var _pauseMenu:PauseState = new PauseState();
 			openSubState(_pauseMenu);
