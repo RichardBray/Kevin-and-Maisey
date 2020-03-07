@@ -13,8 +13,11 @@ class Hud extends FlxSpriteGroup {
   var _pullOutTab: FlxSprite;
   var _itemContainer: FlxSprite;
   var _toggleTweenEnded:Bool = true; // To prevent items from tweening at different speeds
-  var _player:Maisey;
+  var _player:Maisey; // Prevent movement when clicking in items container
+
   var _headphones:FlxSprite;
+  var _strawberry:FlxSprite;
+  var _envelope:FlxSprite;
 
   public var itemComtainerShown: Bool = false;
 
@@ -32,13 +35,19 @@ class Hud extends FlxSpriteGroup {
     add(_itemContainer);
 
     // Items
-    _headphones = new FlxSprite(0, 0);
+    _headphones = new FlxSprite(100, 910);
     _headphones.makeGraphic(60, 60, FlxColor.WHITE);
     _headphones.alpha = 0;
     add(_headphones);
+
+    _strawberry = new FlxSprite(180, 910);
+    _strawberry.makeGraphic(60, 60, FlxColor.WHITE);
+    _strawberry.alpha = 0;
+    add(_strawberry);    
   }
   
   public function toggleItems(showItemContainer:Bool) {
+    /** Pullput tab height change */
     final newItemHeight:Int = showItemContainer ? - 200 : 0;
     
     FlxTween.tween(_itemContainer, {y: (FlxG.height + newItemHeight)}, 0.25);
@@ -60,6 +69,14 @@ class Hud extends FlxSpriteGroup {
       _player.preventMovement = true;
       itemComtainerShown = !itemComtainerShown;
       _toggleTweenEnded = false;
+    }
+
+    if (!_toggleTweenEnded) {
+      _headphones.alpha = 1;
+      _strawberry.alpha = 1;
+    } else {
+      _headphones.alpha = 0;
+      _strawberry.alpha = 0;      
     }
 
     if (FlxG.mouse.overlaps(_itemContainer) && FlxG.mouse.justPressed) _player.preventMovement = true;

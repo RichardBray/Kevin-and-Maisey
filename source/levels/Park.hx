@@ -79,12 +79,12 @@ class Park extends LevelState {
     }
 
     if (_seconds > (_maiseyStopsMoving + 1) && _seconds < _openHelpOne) maisey.faceLeft();
-    if (_seconds > _openHelpOne && _seconds < _closeHelpOne)  {
-      FlxTween.tween(_helpTextOne, {alpha: 1}, 0.5);
+    if (_seconds > _openHelpOne)  { // Needs to toggle on next cut scene
       hud.alpha = 1;
       inCutScene = false; 
       maisey.preventMovement = false;
     }
+    if (_seconds > _openHelpOne && _seconds < _closeHelpOne) FlxTween.tween(_helpTextOne, {alpha: 1}, 0.5);
     if (_seconds > _closeHelpOne) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
   }
 }

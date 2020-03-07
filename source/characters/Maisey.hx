@@ -75,7 +75,7 @@ class Maisey extends FlxSprite {
     if (!preventMovement) {
       if (isFloored) {
         animation.play(isMoving ? "run" : "idle");
-        if (_destY > (808 + height)) {
+        if (_destY > (808 - height)) {
           y = isMoving ? 689 : 679; // hack to fix incorrect spritesheet height
         }
       } else {
