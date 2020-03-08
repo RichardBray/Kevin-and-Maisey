@@ -44,34 +44,36 @@ class BusStop extends LevelState {
     super.create();
 
     // Add bg
-    if (_firstPass) addBackground(); 
-    
-    // Help texts
-    _helpTextOne = createHelpText(
-      "What can you do to help <kevin>Kevin<kevin> get out of his shell?");
-    add(_helpTextOne);
+    if (_firstPass) {
+      addBackground(); 
       
-    // Envirionments
-    _busPost = new FlxSprite(1518, 445);
-    _busPost.loadGraphic("assets/images/environments/busStop.png", false, 102, 375);
-    add(_busPost);
+      // Help texts
+      _helpTextOne = createHelpText(
+        "What can you do to help <kevin>Kevin<kevin> get out of his shell?");
+      add(_helpTextOne);
+        
+      // Envirionments
+      _busPost = new FlxSprite(1518, 445);
+      _busPost.loadGraphic("assets/images/environments/busStop.png", false, 102, 375);
+      add(_busPost);
 
-    // Add characters (start offscreen)
-    _rabbit1 = new Rabbit1(1000, 717);
-    add(_rabbit1);
+      // Add characters (start offscreen)
+      _rabbit1 = new Rabbit1(1000, 717);
+      add(_rabbit1);
 
-    _rabbit2 = new Rabbit2((1000 + (_rabbit1.width/2)), 465);
-    add(_rabbit2);
+      _rabbit2 = new Rabbit2((1000 + (_rabbit1.width/2)), 465);
+      add(_rabbit2);
 
-    _rabbit3 = new Rabbit3((1000 + (_rabbit2.width + 30)), 482);
-    add(_rabbit3);         
-  
-    addKevin(-320, 622); 
-    addMaisey(-140, 590);
+      _rabbit3 = new Rabbit3((1000 + (_rabbit2.width + 30)), 482);
+      add(_rabbit3);         
     
-    // Add hud
-    addHud();
-    hud.alpha = 0;
+      addKevin(-320, 622); 
+      addMaisey(-140, 590);
+      
+      // Add hud
+      addHud();
+      hud.alpha = 0;
+    }
     
     // Fullscreen texts
     if (!_firstPass) showFirstText();  
@@ -115,13 +117,15 @@ class BusStop extends LevelState {
     if (_seconds > _openHelpOne && _seconds < _closeHelpOne) FlxTween.tween(_helpTextOne, {alpha: 1}, 0.5);
     if (_seconds > _closeHelpOne) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
   
+    // Allow player interactivity
     if (_seconds > (_kevinInShell + 1) && _listenSeconds < 1) {
       hud.alpha = 1;
       inCutScene = false; 
       maisey.preventMovement = false;      
     }
+
     // Kevin wears headphones
-    if (_listenSeconds > 0) _listenSeconds += elapsed; // Start eat timer
+    if (_listenSeconds > 0) _listenSeconds += elapsed;
     if (FlxG.mouse.overlaps(kevin) && FlxG.mouse.justPressed && selectedItem == "headphones") {
       kevin.isInShellIdle = false;       
       kevin.isListening = true; 
@@ -134,6 +138,7 @@ class BusStop extends LevelState {
     if (_listenSeconds > 2) {
       FlxTween.tween(maisey, {x: 2000}, 4);
       maisey.faceRight();
+      inCutScene = true;
     }
     
     // End scene
