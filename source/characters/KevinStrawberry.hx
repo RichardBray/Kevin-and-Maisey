@@ -10,7 +10,7 @@ class KevinStrawberry extends FlxSprite {
 
     loadGraphic("assets/images/characters/kevin_strawberry.png", true, 446, 201);
 
-    animation.add("eating", [for (i in 0...72) i], 15, false);	
+    animation.add("eating", [for (i in 0...72) i], 12, false);	
   }
 
   override public function update(elapsed:Float) {

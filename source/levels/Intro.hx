@@ -16,6 +16,7 @@ import states.LevelState.SpeechData;
 class Intro extends LevelState {
 
   var _seconds:Float = 0;
+  var _kevinClicked:Float = 0;
   var _firstPass:Bool = false;
   var _maiseyIntroduced:Bool = false;
   var _kevinEating:KevinEating;
@@ -145,8 +146,8 @@ class Intro extends LevelState {
     _charactersLeaving = true;
     speech.alpha = 0;
     maisey.faceRight();
-    FlxTween.tween(kevin, {x: 2000}, 6);
-    FlxTween.tween(maisey, {x: 2000}, 4);
+    FlxTween.tween(kevin, {x: 2000}, 9);
+    FlxTween.tween(maisey, {x: 2000}, 7);
   }
 
 	function fadeOut() {
@@ -160,7 +161,6 @@ class Intro extends LevelState {
   function mainCharactersInteract() {
     FlxTween.tween(_helpTextFour, {alpha: 0}, 0.5);  
     _charactersTallking = true;
-    FlxTween.tween(maisey, {x: 1127, y: 590}, 0.5);
     maisey.faceLeft();
     maisey.isFlying = true;
     haxe.Timer.delay(() -> inCutScenePrep(charactersTalk), 500);
@@ -172,7 +172,7 @@ class Intro extends LevelState {
 
     if (_charactersLeaving) {
       kevin.isWalking = true;
-      kevin.isNodding = false;
+      kevin.isIdle = false;
     }
 
     if (_seconds > (_closeHelpOne + 2) && _seconds < (_closeHelpOne + 10)) {
@@ -182,7 +182,7 @@ class Intro extends LevelState {
     }     
     if (_seconds > (_closeHelpOne)) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
     if (_seconds > (_openHelpTwo) && _seconds < (_openHelpTwo + 4)) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
-    if (_seconds > (6.666)) {
+    if (_seconds > (6.2)) {
       _kevinEating.alpha = 0;
       kevin.alpha = 1;
     }
@@ -190,18 +190,26 @@ class Intro extends LevelState {
     if (_seconds > (_closeHelpTwo)) FlxTween.tween(_helpTextTwo, {alpha: 0}, 0.5);
     if (_seconds > (_openHelpThree) && _seconds < (_openHelpThree + 4)) FlxTween.tween(_helpTextThree, {alpha: 1}, 0.5);
     if (_seconds > (_closeHelpThree)) FlxTween.tween(_helpTextThree, {alpha: 0}, 0.5);
-    if (_seconds > (_openHelpFour) && _seconds < (_openHelpFour + 2)) {
+    if (_seconds > (_openHelpFour) && _seconds < (_openHelpFour + 0.1)) {
       FlxTween.tween(_helpTextFour, {alpha: 1}, 0.5);
       FlxTween.tween(maisey, {y: 579}, 0.5);
-      maisey.isIdle = false;
       maisey.isFlying = true;
-      maisey.isFloored = false;
-      inCutScene = false;         
+      inCutScene = false;  
+      kevin.isNodding = false;   
+      kevin.isIdle = true;    
     }
     if (_seconds > (_openHelpFour)) maisey.preventMovement = _charactersTallking;
 
-    if (FlxG.mouse.overlaps(kevin) && FlxG.mouse.justPressed && selectedItem == "headphones") {
+    if (_kevinClicked > 0) _kevinClicked += elapsed;  
+    if (FlxG.mouse.overlaps(kevin)) {
+      maisey.preventMovement = true;
+      maisey.isIdle = false;
+      if (FlxG.mouse.justPressed) _kevinClicked += elapsed; 
+    }
+
+    if (_kevinClicked > 0.4 && _kevinClicked < 0.5) {
       mainCharactersInteract();
+      FlxTween.tween(maisey, {x: 1127, y: 590}, 0.5);
     }
     
     // End scene

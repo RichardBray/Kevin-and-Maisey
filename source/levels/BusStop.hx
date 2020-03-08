@@ -54,17 +54,17 @@ class BusStop extends LevelState {
     // Envirionments
     _busPost = new FlxSprite(1518, 445);
     _busPost.loadGraphic("assets/images/environments/busStop.png", false, 102, 375);
-    add(_busPost);
+    if (_firstPass) add(_busPost);
 
     // Add characters (start offscreen)
     _rabbit1 = new Rabbit1(1000, 717);
-    add(_rabbit1);
+    if (_firstPass) add(_rabbit1);
 
     _rabbit2 = new Rabbit2((1000 + (_rabbit1.width/2)), 465);
-    add(_rabbit2);
+    if (_firstPass) add(_rabbit2);
 
     _rabbit3 = new Rabbit3((1000 + (_rabbit2.width + 30)), 482);
-    add(_rabbit3);         
+    if (_firstPass) add(_rabbit3);         
   
     addKevin(-320, 622); 
     addMaisey(-140, 590);

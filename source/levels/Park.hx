@@ -23,8 +23,8 @@ class Park extends LevelState {
   var _charactersLeaving:Bool = false;
   
   // Timings
-  final _kevinStopsMoving:Float = 4;
-  final _maiseyStopsMoving:Float = 4.2;
+  final _kevinStopsMoving:Float = 10;
+  final _maiseyStopsMoving:Float = 8.2;
   var _openHelpOne:Float = 0;
   var _closeHelpOne:Float = 0;
 
@@ -45,7 +45,7 @@ class Park extends LevelState {
   
     // Help texts
     _helpTextOne = createHelpText(
-      "What can you do to help <kevin>Kevin<kevin> with his hunger?");
+      "Uh oh <kevin>Kevin's<kevin> stomach is rumbling. Do you have any food?");
     add(_helpTextOne);
     
     // Add characters (start offscreen)
@@ -108,8 +108,8 @@ class Park extends LevelState {
     speech.alpha = 0;
     maisey.faceRight();
     kevin.isWalking = true;
-    FlxTween.tween(kevin, {x: 2000}, 6);
-    FlxTween.tween(maisey, {x: 2000}, 4);
+    FlxTween.tween(kevin, {x: 2000}, 10);
+    FlxTween.tween(maisey, {x: 2200}, 7);
   }  
 
 	function fadeOut() {
@@ -124,7 +124,7 @@ class Park extends LevelState {
     super.update(elapsed);
     _seconds += elapsed; // Used for animations
 
-    if (_seconds > _kevinStopsMoving && _seconds < 5) {
+    if (_seconds > _kevinStopsMoving && _seconds < 11) {
       kevin.isWalking = false;
       kevin.isIdle = true;
     }
