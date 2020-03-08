@@ -57,7 +57,7 @@ class Intro extends LevelState {
     // Environment
     _blueLine = new FlxSprite(0, 820);
     _blueLine.makeGraphic(FlxG.width, 10, Constants.floorBlue);
-    add(_blueLine);
+    if (_firstPass) add(_blueLine);
 
     // Help texts
     _helpTextOne = createHelpText("<kevin>Kevin<kevin> struggles with anxiety and often finds it hard to communicate.");
@@ -78,11 +78,12 @@ class Intro extends LevelState {
 
     // Add characters
     addKevin(480, 622);
+    kevin.isIdle = true;
     kevin.alpha = 0;
   
     _kevinEating = new KevinEating(400, 630);
     _kevinEating.alpha = 1;
-    add(_kevinEating);
+    if (_firstPass) add(_kevinEating);
 
     addMaisey(2000, floor.y - (141 - 20));
     maisey.isFloored = true;
@@ -156,7 +157,7 @@ class Intro extends LevelState {
 		FlxG.switchState(new Park());
 	}  
 
-  override public function mainCharactersInteract(_, _) {
+  function mainCharactersInteract() {
     FlxTween.tween(_helpTextFour, {alpha: 0}, 0.5);  
     _charactersTallking = true;
     FlxTween.tween(maisey, {x: 1127, y: 590}, 0.5);
@@ -169,12 +170,19 @@ class Intro extends LevelState {
     super.update(elapsed);
     _seconds += elapsed; // Used for animations
 
-    if (_charactersLeaving) kevin.isWalking = true;
+    if (_charactersLeaving) {
+      kevin.isWalking = true;
+      kevin.isNodding = false;
+    }
 
-    if (_seconds > (_closeHelpOne + 2) && _seconds < (_closeHelpOne + 10)) introMaisy();      
+    if (_seconds > (_closeHelpOne + 2) && _seconds < (_closeHelpOne + 10)) {
+      introMaisy();
+      kevin.isIdle = false;
+      kevin.isNodding = true; 
+    }     
     if (_seconds > (_closeHelpOne)) FlxTween.tween(_helpTextOne, {alpha: 0}, 0.5);
     if (_seconds > (_openHelpTwo) && _seconds < (_openHelpTwo + 4)) FlxTween.tween(_helpTextTwo, {alpha: 1}, 0.5);
-    if (_seconds > (7.666)) {
+    if (_seconds > (6.666)) {
       _kevinEating.alpha = 0;
       kevin.alpha = 1;
     }
@@ -191,6 +199,10 @@ class Intro extends LevelState {
       inCutScene = false;         
     }
     if (_seconds > (_openHelpFour)) maisey.preventMovement = _charactersTallking;
+
+    if (FlxG.mouse.overlaps(kevin) && FlxG.mouse.justPressed && selectedItem == "headphones") {
+      mainCharactersInteract();
+    }
     
     // End scene
     if (kevin.x == 2000) fadeOut();

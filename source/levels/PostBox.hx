@@ -166,6 +166,6 @@ class PostBox extends LevelState {
       kevin.isNodding = true;
     }
     // End scene
-    if (_letterPosted > 12) fadeOut();      
+    if (_letterPosted > 16) fadeOut();      
   }
 }

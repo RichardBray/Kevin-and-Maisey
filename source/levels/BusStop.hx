@@ -44,36 +44,34 @@ class BusStop extends LevelState {
     super.create();
 
     // Add bg
-    if (_firstPass) {
-      addBackground(); 
+    if (_firstPass) addBackground(); 
       
-      // Help texts
-      _helpTextOne = createHelpText(
-        "What can you do to help <kevin>Kevin<kevin> get out of his shell?");
-      add(_helpTextOne);
-        
-      // Envirionments
-      _busPost = new FlxSprite(1518, 445);
-      _busPost.loadGraphic("assets/images/environments/busStop.png", false, 102, 375);
-      add(_busPost);
+    // Help texts
+    _helpTextOne = createHelpText(
+      "What can you do to help <kevin>Kevin<kevin> cope with the crowd?");
+    add(_helpTextOne);
+      
+    // Envirionments
+    _busPost = new FlxSprite(1518, 445);
+    _busPost.loadGraphic("assets/images/environments/busStop.png", false, 102, 375);
+    add(_busPost);
 
-      // Add characters (start offscreen)
-      _rabbit1 = new Rabbit1(1000, 717);
-      add(_rabbit1);
+    // Add characters (start offscreen)
+    _rabbit1 = new Rabbit1(1000, 717);
+    add(_rabbit1);
 
-      _rabbit2 = new Rabbit2((1000 + (_rabbit1.width/2)), 465);
-      add(_rabbit2);
+    _rabbit2 = new Rabbit2((1000 + (_rabbit1.width/2)), 465);
+    add(_rabbit2);
 
-      _rabbit3 = new Rabbit3((1000 + (_rabbit2.width + 30)), 482);
-      add(_rabbit3);         
+    _rabbit3 = new Rabbit3((1000 + (_rabbit2.width + 30)), 482);
+    add(_rabbit3);         
+  
+    addKevin(-320, 622); 
+    addMaisey(-140, 590);
     
-      addKevin(-320, 622); 
-      addMaisey(-140, 590);
-      
-      // Add hud
-      addHud();
-      hud.alpha = 0;
-    }
+    // Add hud
+    addHud();
+    hud.alpha = 0;
     
     // Fullscreen texts
     if (!_firstPass) showFirstText();  
@@ -90,7 +88,7 @@ class BusStop extends LevelState {
   }
 
   function showFirstText() {
-    FlxG.switchState(new FullscreenText("Bus stop boogie", "BusStop", [true]));
+    FlxG.switchState(new FullscreenText("Facing the crowd", "BusStop", [true]));
   }  
 
 	function fadeOut() {

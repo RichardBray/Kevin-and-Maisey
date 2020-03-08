@@ -16,7 +16,7 @@ class Kevin extends FlxSprite {
 
     loadGraphic("assets/images/characters/kevin.png", true, 310, 199);
 
-    animation.add("idle", [for (i in 0...9) i], 12);	
+    animation.add("idle", [for (i in 0...9) i], 6);	
     animation.add("nodding", [for (i in 16...20) i], 12);	
     animation.add("walking", [for (i in 32...42) i], 12);
     animation.add("listening", [for (i in 48...58) i], 12);

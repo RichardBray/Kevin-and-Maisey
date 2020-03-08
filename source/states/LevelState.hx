@@ -107,10 +107,6 @@ class LevelState extends GameState {
     maiseyCol.isFloored = true;
   }
 
-  public function mainCharactersInteract(_, _) {
-    // made to be ovewritten
-  }
-
   override public function update(elapsed:Float) {
     super.update(elapsed);
 
@@ -131,7 +127,6 @@ class LevelState extends GameState {
     
     // Overlaps
     if (!inCutScene) {
-      FlxG.overlap(maisey, kevin, mainCharactersInteract);
       if (FlxG.overlap(maisey, floor)) {
         maisey.isFloored = true;
       } else {

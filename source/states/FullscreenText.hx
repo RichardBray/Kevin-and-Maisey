@@ -45,8 +45,6 @@ class FullscreenText extends GameState {
     // Background sprite
     _backgroundSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
     add(_backgroundSprite);
-
-
     
     // Main text
     _mainText = new FlxText(0, 0, _compTextWidth);
