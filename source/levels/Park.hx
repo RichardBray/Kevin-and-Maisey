@@ -1,8 +1,8 @@
 package levels;
 
+import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
-import flixel.FlxState;
 import flixel.FlxG;
 
 import states.FullscreenText;
@@ -32,7 +32,7 @@ class Park extends LevelState {
     super();
     _firstPass = firstPass;
     _openHelpOne = _maiseyStopsMoving + 2;
-    _closeHelpOne = _openHelpOne + 6;
+    _closeHelpOne = _openHelpOne + 4;
   }
 
   override public function create() {
@@ -45,12 +45,11 @@ class Park extends LevelState {
   
     // Help texts
     _helpTextOne = createHelpText(
-      "You will often have to read Kevin’s body language to help decide what is best. 
-      Save objects to use later, they might come in handy to resolve stressful situations.");
+      "What can you do to help <kevin>Kevin<kevin> with his hunger?");
     add(_helpTextOne);
     
     // Add characters (start offscreen)
-    addKevin(-320, 655); 
+    addKevin(-320, 622); 
     addMaisey(-140, 590); 
 
     _kevinEating = new KevinStrawberry(600, 630);
@@ -77,13 +76,13 @@ class Park extends LevelState {
 
   function showFirstText() {
     FlxG.switchState(
-      new FullscreenText("Tip: The icon in the bottom left means you click to move <maisey>Maisy<maisey>", "Park", 
+      new FullscreenText("5 minutes later..", "Park", 
       [true])
     );
   }
 
   function charactersTalk(_) {
-    final speechPos:Array<Int> = [860, 568];
+    final speechPos:Array<Int> = [860, 430];
     final sentences:Array<SpeechData> = [
       {
         x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nFeeling better?", timing: 0
@@ -108,10 +107,19 @@ class Park extends LevelState {
     _charactersLeaving = true;
     speech.alpha = 0;
     maisey.faceRight();
+    kevin.isWalking = true;
     FlxTween.tween(kevin, {x: 2000}, 6);
     FlxTween.tween(maisey, {x: 2000}, 4);
   }  
 
+	function fadeOut() {
+		FlxG.cameras.fade(FlxColor.WHITE, 0.5, false, changeState);
+  }  
+  
+	function changeState() {
+		FlxG.switchState(new BusStop());
+  }  
+  
   override public function update(elapsed:Float) {
     super.update(elapsed);
     _seconds += elapsed; // Used for animations
@@ -122,7 +130,7 @@ class Park extends LevelState {
     }
 
     if (_seconds > (_maiseyStopsMoving + 1) && _seconds < _openHelpOne) maisey.faceLeft();
-    if (_seconds > _openHelpOne)  { // Needs to toggle on next cut scene
+    if (_seconds > _openHelpOne && _eatSeconds < 4.7)  {
       hud.alpha = 1;
       inCutScene = false; 
       maisey.preventMovement = false;
@@ -142,14 +150,21 @@ class Park extends LevelState {
     }
 
     // Cut screne
-    if (_eatSeconds > 4.7 && _eatSeconds < 6) {
+    if (_eatSeconds > 4.7) {
       kevin.alpha = 1;
       _kevinEating.alpha = 0;  
       maisey.preventMovement = true;
-      FlxTween.tween(maisey, {x:1160, y:660}, 1);        
+      inCutScene = true; 
+      hud.alpha = 0;
     }
-    if (_eatSeconds > 6 && !_charactersLeaving && _eatSeconds < 7) {
+    if (_eatSeconds > 4.7 && _eatSeconds < 6) {
+      FlxTween.tween(maisey, {x:1160, y:660}, 1, {onComplete: (_) -> maisey.faceLeft()});
+    }
+    if (_eatSeconds > 6 && !_charactersLeaving && _eatSeconds < 6.1) {
       inCutScenePrep(charactersTalk);
     }
+
+    // End scene
+    if (kevin.x == 2000) fadeOut();    
   }
 }

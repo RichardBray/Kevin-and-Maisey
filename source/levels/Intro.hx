@@ -77,7 +77,7 @@ class Intro extends LevelState {
 
 
     // Add characters
-    addKevin(480, 655);
+    addKevin(480, 622);
     kevin.alpha = 0;
   
     _kevinEating = new KevinEating(400, 630);
@@ -101,7 +101,7 @@ class Intro extends LevelState {
 
   function showFirstText() {
     FlxG.switchState(
-      new FullscreenText("Meet <kevin>Kevin<kevin>", "Intro", 
+      new FullscreenText("Meet Kevin", "Intro", 
       [true])
     );
   }

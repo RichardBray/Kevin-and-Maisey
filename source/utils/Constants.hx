@@ -7,6 +7,8 @@ import flixel.util.FlxColor;
 import states.LevelState;
 import levels.Intro;
 import levels.Park;
+import levels.BusStop;
+import levels.PostBox;
 
 class Constants {
   // General
@@ -29,8 +31,8 @@ class Constants {
 	public static final levelNames:Map<String, Class<LevelState>> = [
 		"Intro" => Intro, 
     "Park" => Park,
-    "BusStop" => Intro,
-		"Postbox" => Intro
+    "BusStop" => BusStop,
+		"PostBox" => PostBox
   ];  
   
   // Text formatting
