@@ -84,13 +84,13 @@ class PostBox extends LevelState {
         x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nThat's one job done.", timing: 0
       },
       {
-        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nWhat an eventful morning.", timing: 2000
+        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nWhat an eventful morning.", timing: 3000
       },
       {
-        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nAre you ready to go home?", timing: 5000
+        x: speechPos[0], y: speechPos[1], text: "<maisey>Maisy<maisey>\nAre you ready to go home?", timing: 6000
       },
       {
-        x: (speechPos[0] - 20), y: speechPos[1], text: "<kebin>Kevin<kebin>\nYes", timing: 8000
+        x: (speechPos[0] - 20), y: speechPos[1], text: "<kevin>Kevin<kevin>\nYes", timing: 9000
       },      
       {
         x: speechPos[0], y: speechPos[1], text: "", timing: 11000
