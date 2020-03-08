@@ -20,7 +20,7 @@ class Kevin extends FlxSprite {
     animation.add("nodding", [for (i in 16...20) i], 12);	
     animation.add("walking", [for (i in 32...42) i], 12);
     animation.add("listening", [for (i in 48...58) i], 12);
-    animation.add("inShell", [for (i in 64...79) i], 6);	
+    animation.add("inShell", [for (i in 64...79) i], 8);	
     animation.add("inShellIdle", [79], 12);	    	
     animation.add("outShell", [for (i in 80...95) i], 12);
 

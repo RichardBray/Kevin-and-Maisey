@@ -26,8 +26,8 @@ class BusStop extends LevelState {
   var _helpTextOne:FlxText;  
 
   // Timings
-  final _kevinStopsMoving:Float = 2.5;
-  final _maiseyStopsMoving:Float = 2.7; 
+  final _kevinStopsMoving:Float = 9.5;
+  final _maiseyStopsMoving:Float = 8.7; 
   var _kevinInShell:Float = 0;
   var _openHelpOne:Float = 0;
   var _closeHelpOne:Float = 0;   
@@ -35,9 +35,9 @@ class BusStop extends LevelState {
   public function new(firstPass:Bool = false) {
     super();
     _firstPass = firstPass;
-    _openHelpOne = _maiseyStopsMoving + 2;
-    _closeHelpOne = _openHelpOne + 4;    
-    _kevinInShell = _kevinStopsMoving + 1;
+    _openHelpOne = _maiseyStopsMoving + 4;
+    _closeHelpOne = _openHelpOne + 6;    
+    _kevinInShell = _kevinStopsMoving + 1.8;
   }
 
   override public function create() {
@@ -48,7 +48,8 @@ class BusStop extends LevelState {
       
     // Help texts
     _helpTextOne = createHelpText(
-      "What can you do to help <kevin>Kevin<kevin> cope with the crowd?");
+      "<kevin>Kevin<kevin> finds crowds overwhelming, hightening his anxiety. 
+      Can you help him navigate past the bus stop?");
     add(_helpTextOne);
       
     // Envirionments
@@ -67,7 +68,7 @@ class BusStop extends LevelState {
     if (_firstPass) add(_rabbit3);         
   
     addKevin(-320, 622); 
-    addMaisey(-140, 590);
+    addMaisey(-280, 590);
     
     // Add hud
     addHud();
@@ -130,11 +131,11 @@ class BusStop extends LevelState {
       _listenSeconds += elapsed;
       hud.alpha = 0;
       hud.hideHud();
-      FlxTween.tween(kevin, {x: 2000}, 6);
+      FlxTween.tween(kevin, {x: 2000}, 11);
       updateSelectedItem("");
     }   
     if (_listenSeconds > 2) {
-      FlxTween.tween(maisey, {x: 2000}, 4);
+      FlxTween.tween(maisey, {x: 2500}, 8);
       maisey.faceRight();
       inCutScene = true;
     }

@@ -38,6 +38,8 @@ class Park extends LevelState {
   override public function create() {
     super.create();
 
+    FlxG.sound.playMusic("assets/music/birds.ogg", 0.5, false);	
+
     // Add bg
     if (_firstPass) addBackground();
 

@@ -23,8 +23,8 @@ class PostBox extends LevelState {
   var _helpTextOne:FlxText;
 
   // Timings
-  final _kevinStopsMoving:Float = 4;
-  final _maiseyStopsMoving:Float = 4.2; 
+  final _kevinStopsMoving:Float = 10;
+  final _maiseyStopsMoving:Float = 8.2; 
   var _openHelpOne:Float = 0;
   var _closeHelpOne:Float = 0;  
   var _letterPosted:Float = 0;  
@@ -32,7 +32,7 @@ class PostBox extends LevelState {
   public function new(firstPass:Bool = false) {
     super();
     _firstPass = firstPass;
-    _openHelpOne = _maiseyStopsMoving + 1;
+    _openHelpOne = _maiseyStopsMoving + 2.2;
     _closeHelpOne = _openHelpOne + 3;     
   }
 
@@ -166,6 +166,6 @@ class PostBox extends LevelState {
       kevin.isNodding = true;
     }
     // End scene
-    if (_letterPosted > 16) fadeOut();      
+    if (_letterPosted > 14) fadeOut();      
   }
 }

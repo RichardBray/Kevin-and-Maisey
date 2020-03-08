@@ -53,6 +53,7 @@ class Intro extends LevelState {
   override public function create() {
     super.create();
   
+    FlxG.sound.music.stop();
     addSpeech();
   
     // Environment
