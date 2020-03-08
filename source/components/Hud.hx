@@ -1,5 +1,6 @@
 package components;
 
+import flixel.system.FlxSound;
 import flixel.FlxObject;
 import utils.Constants;
 import flixel.FlxG;
@@ -29,6 +30,8 @@ class Hud extends FlxSpriteGroup {
   var _envelope:FlxSprite;
   var _envelopeBox:FlxSprite;
 
+  var _sndSwoosh:FlxSound;
+
   final pulloutSize:Array<Int> = [78, 74];
 
   public var itemComtainerShown: Bool = false;
@@ -38,6 +41,8 @@ class Hud extends FlxSpriteGroup {
 
     _player = maisey;
     _updateSelectedItem = updateSelectedItem;
+
+    _sndSwoosh = FlxG.sound.load("assets/sounds/swoosh.ogg", 1);
 
     _pullOutTab = new FlxSprite(FlxG.width - pulloutSize[0], FlxG.height - pulloutSize[1]);
     _pullOutTab.loadGraphic("assets/images/items/toggle_open.png", false, pulloutSize[0], pulloutSize[1]);
@@ -76,7 +81,7 @@ class Hud extends FlxSpriteGroup {
   public function toggleItems(showItemContainer:Bool) {
     /** Pullput tab height change */
     final newItemHeight:Int = showItemContainer ? - 215 : 0;
-    
+    _sndSwoosh.play();
     FlxTween.tween(_itemContainer, {y: (FlxG.height + newItemHeight)}, 0.25);
     FlxTween.tween(
       _pullOutTab, 

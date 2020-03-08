@@ -15,6 +15,17 @@ class PauseState extends FlxSubState {
 
   var _boBackBtn:FlxButton;
 
+  public function new() {
+    super();
+    // Reset mouse
+    FlxG.mouse.unload();
+
+		haxe.Timer.delay(() -> {
+			if (FlxG.sound.music != null) FlxG.sound.music.pause();
+			FlxG.sound.pause();
+		}, 100);        
+  }
+
   override public function create() {
     super.create();
 
@@ -33,12 +44,11 @@ class PauseState extends FlxSubState {
     _boBackBtn.health = 200;
     _boBackBtn.label.setFormat(Constants.rokkittRegular, Constants.medFont, FlxColor.BLACK);
     // add(_boBackBtn);
-
-    // Reset mouse
-    FlxG.mouse.unload();
   }
 
   function closePauseMenu() {
+    if (FlxG.sound.music != null) FlxG.sound.music.play();
+		FlxG.sound.resume();
     close(); 
   }
 

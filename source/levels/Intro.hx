@@ -52,8 +52,7 @@ class Intro extends LevelState {
 
   override public function create() {
     super.create();
-  
-    FlxG.sound.music.stop();
+    if (_firstPass) FlxG.sound.playMusic("assets/music/chill.ogg", 0.6, true);
     addSpeech();
   
     // Environment
@@ -156,6 +155,7 @@ class Intro extends LevelState {
   }  
   
 	function changeState() {
+    FlxG.sound.music.persist = false;	  
 		FlxG.switchState(new Park());
 	}  
 

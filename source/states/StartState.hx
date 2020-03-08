@@ -17,10 +17,11 @@ class StartState extends GameState {
 
 	override public function create() {
 		super.create();
-		FlxG.sound.music = null; // Make sure there's no music
 
-		FlxG.sound.playMusic("assets/music/theme.ogg", 0.4, false);	
-		FlxG.sound.music.persist = true;
+		if (FlxG.sound.music == null) {
+			FlxG.sound.playMusic("assets/music/theme.ogg", 0.4, false);	
+			FlxG.sound.music.persist = true;
+		}
 			
 		bgColor = FlxColor.WHITE;
 		FlxG.cameras.fade(bgColor, 0.5, true); // Level fades in

@@ -38,6 +38,8 @@ class PostBox extends LevelState {
 
   override public function create() {
     super.create();
+    FlxG.sound.playMusic("assets/music/bass.ogg", 0.8, true);
+    FlxG.sound.music.persist = false;	
 
     // Add bg
     if (_firstPass) addBackground(); 
@@ -46,7 +48,7 @@ class PostBox extends LevelState {
 
     // Help texts
     _helpTextOne = createHelpText(
-      "Can you help <maisey>Maisy<maisey> post the letter?");
+      "");
     add(_helpTextOne);
     
     // Envirionments
@@ -121,7 +123,7 @@ class PostBox extends LevelState {
   }  
   
 	function changeState() {
-		FlxG.switchState(new PostBox());
+		FlxG.switchState(new states.EndState());
   }    
 
   override public function update(elapsed:Float) {
@@ -131,6 +133,7 @@ class PostBox extends LevelState {
     if (_seconds > _kevinStopsMoving && _letterPosted == 0) {
       kevin.isListening = false;
       kevin.isIdle = true;
+      FlxG.sound.music.stop();
     } 
     
     if (_seconds > _openHelpOne && _seconds < _closeHelpOne) FlxTween.tween(_helpTextOne, {alpha: 1}, 0.5);

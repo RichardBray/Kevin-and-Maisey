@@ -1,5 +1,6 @@
 package levels;
 
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
@@ -20,6 +21,7 @@ class Park extends LevelState {
   var _kevinEating:KevinStrawberry;  
   var _helpTextOne:FlxText;
 
+  var _sndGrowl:FlxSound;
   var _charactersLeaving:Bool = false;
   
   // Timings
@@ -38,7 +40,10 @@ class Park extends LevelState {
   override public function create() {
     super.create();
 
-    FlxG.sound.playMusic("assets/music/birds.ogg", 0.5, false);	
+    FlxG.sound.playMusic("assets/music/birds.ogg", 0.5, true);
+    FlxG.sound.music.persist = false;	
+
+    _sndGrowl = FlxG.sound.load("assets/sounds/growl.ogg", 1);
 
     // Add bg
     if (_firstPass) addBackground();
@@ -130,6 +135,7 @@ class Park extends LevelState {
       kevin.isWalking = false;
       kevin.isIdle = true;
     }
+    if (_seconds > _kevinStopsMoving && _seconds < (_kevinStopsMoving + 0.1)) _sndGrowl.play();
 
     if (_seconds > (_maiseyStopsMoving + 1) && _seconds < _openHelpOne) maisey.faceLeft();
     if (_seconds > _openHelpOne && _eatSeconds < 4.7)  {

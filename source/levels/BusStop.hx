@@ -1,5 +1,6 @@
 package levels;
 
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import characters.Rabbit3;
 import characters.Rabbit2;
@@ -24,6 +25,7 @@ class BusStop extends LevelState {
   var _rabbit3:Rabbit3;
 
   var _helpTextOne:FlxText;  
+  var _sndGasp:FlxSound;
 
   // Timings
   final _kevinStopsMoving:Float = 9.5;
@@ -43,6 +45,10 @@ class BusStop extends LevelState {
   override public function create() {
     super.create();
 
+    FlxG.sound.playMusic("assets/music/crowd.ogg", 0.8, true);
+    FlxG.sound.music.persist = false;	  
+    _sndGasp = FlxG.sound.load("assets/sounds/gasp.ogg", 0.6);
+    
     // Add bg
     if (_firstPass) addBackground(); 
       
@@ -108,6 +114,7 @@ class BusStop extends LevelState {
       kevin.isWalking = false;
       kevin.isInShell = true;
     }   
+    if (_seconds > _kevinStopsMoving && _seconds < (_kevinStopsMoving + 0.5)) _sndGasp.play();
     if (_seconds > (_maiseyStopsMoving + 1) && _seconds < _openHelpOne) maisey.faceLeft();
     if (_seconds > _kevinInShell && _listenSeconds == 0) { // and here
       kevin.isInShell = false;
@@ -129,6 +136,7 @@ class BusStop extends LevelState {
       kevin.isInShellIdle = false;       
       kevin.isListening = true; 
       _listenSeconds += elapsed;
+      FlxG.sound.playMusic("assets/music/bass.ogg", 0.8, true);
       hud.alpha = 0;
       hud.hideHud();
       FlxTween.tween(kevin, {x: 2000}, 11);
@@ -141,6 +149,9 @@ class BusStop extends LevelState {
     }
     
     // End scene
-    if (kevin.x == 2000) fadeOut();    
+    if (kevin.x == 2000) {
+      fadeOut();
+      FlxG.sound.music.stop();
+    }
   }
 }
