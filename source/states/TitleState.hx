@@ -54,7 +54,7 @@ class TitleState extends GameState {
       _startText.alpha = 1;
     }
 
-    if (FlxG.mouse.overlaps(_startText)) {
+    if (FlxG.mouse.overlaps(_closeGameText)) {
       _closeGameText.alpha = 0.5;
       if (FlxG.mouse.justPressed) System.exit(0);
     } else {
